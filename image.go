@@ -50,14 +50,19 @@ func (o Operation) Run(buf []byte, opts ImageOptions) (Image, error) {
 
 // ImageInfo represents an image details and additional metadata
 type ImageInfo struct {
-	Width       int    `json:"width"`
-	Height      int    `json:"height"`
-	Type        string `json:"type"`
-	Space       string `json:"space"`
-	Alpha       bool   `json:"hasAlpha"`
-	Profile     bool   `json:"hasProfile"`
-	Channels    int    `json:"channels"`
-	Orientation int    `json:"orientation"`
+	Width            int    `json:"width"`
+	Height           int    `json:"height"`
+	Type             string `json:"type"`
+	Space            string `json:"space"`
+	Alpha            bool   `json:"hasAlpha"`
+	Profile          bool   `json:"hasProfile"`
+	Channels         int    `json:"channels"`
+	Orientation      int    `json:"orientation"`
+	Make             string `json:"make"`
+	Model            string `json:"model"`
+	Software         string `json:"software"`
+	DateTime         string `json:"datetime"`
+	DateTimeOriginal string `json:"datetimeOriginal"`
 }
 
 func Info(buf []byte, o ImageOptions) (Image, error) {
@@ -71,14 +76,19 @@ func Info(buf []byte, o ImageOptions) (Image, error) {
 	}
 
 	info := ImageInfo{
-		Width:       meta.Size.Width,
-		Height:      meta.Size.Height,
-		Type:        meta.Type,
-		Space:       meta.Space,
-		Alpha:       meta.Alpha,
-		Profile:     meta.Profile,
-		Channels:    meta.Channels,
-		Orientation: meta.Orientation,
+		Width:            meta.Size.Width,
+		Height:           meta.Size.Height,
+		Type:             meta.Type,
+		Space:            meta.Space,
+		Alpha:            meta.Alpha,
+		Profile:          meta.Profile,
+		Channels:         meta.Channels,
+		Orientation:      meta.Orientation,
+		Make:             meta.EXIF.Make,
+		Model:            meta.EXIF.Model,
+		Software:         meta.EXIF.Software,
+		DateTime:         meta.EXIF.Datetime,
+		DateTimeOriginal: meta.EXIF.DateTimeOriginal,
 	}
 
 	body, _ := json.Marshal(info)
